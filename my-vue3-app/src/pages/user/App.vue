@@ -53,6 +53,8 @@
 </template>
 
 <script setup>
+import {io} from 'socket.io-client'
+const socket = io('http://localhost:3000')
 import { ref } from 'vue'
 import img from './/assets/logo.png'
 
@@ -65,26 +67,42 @@ const images = ref([img])
 const messages = ref([])
 
 function sendMessage(type, content) {
+  const address='123.45.67.890'
   if (type === 'text' && input.value.trim()) {
     const newMessage = {
       id: Date.now(),
       type: type,
-      content: input.value
+      content: input.value,
+      address: address
     }
     messages.value.push(newMessage)
+    socket.emit('send message', newMessage);
     input.value = ''
   } else if (type === 'image' && content) {
     const newMessage = {
       id: Date.now(),
       type: type,
-      content: content
+      content: content,
+      address: address
     }
     messages.value.push(newMessage)
+    socket.emit('send message', newMessage);
     drawer.value = false
+  } else if (type === 'video' && content) {
+    const newMessage = {
+      id: Date.now(),
+      type: type,
+      content: content,
+      address: address
+    }
+    messages.value.push(newMessage)
+    socket.emit('send message', newMessage);
+    drawer1.value = false
   }
 }
 
 </script>
+
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900');

@@ -29,20 +29,35 @@
 </template>
 
 <script setup>
-const tableData = [
-  {
-    address: '123.45.67.890',
-    action: 'a envoyé un message (28 o)'
-  },
-  {
-    address: '123.45.67.890',
-    action: 'a envoyé un image (28 kb)'
-  },
-  {
-    address: '123.45.67.890',
-    action: 'a envoyé un video (28 mb)'
-  },
-]
+import{io} from 'socket.io-client'
+import { ref, onMounted} from 'vue';
+const socket = io('http://localhost:3000')
+
+// const tableData = [
+//   {
+//     address: '123.45.67.890',
+//     action: 'a envoyé un message (28 o)'
+//   },
+//   {
+//     address: '123.45.67.890',
+//     action: 'a envoyé un image (28 kb)'
+//   },
+//   {
+//     address: '123.45.67.890',
+//     action: 'a envoyé un video (28 mb)'
+//   },
+// ]
+const tableData = ref([]);
+onMounted(() => {
+
+  socket.on('new message', (newMessage) => {
+
+    tableData.value.push({
+      address: newMessage.address,
+      action: `a envoyé un ${newMessage.type} (${newMessage.content.length} bytes)` // 你需要根据消息类型调整显示的文本
+    });
+  });
+});
 </script>
 
 <style scoped>
