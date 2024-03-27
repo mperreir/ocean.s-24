@@ -205,6 +205,10 @@ input {
   font-family: Outfit;
 }
 
+img {
+  border-radius: 16px;
+}
+
 
 
 </style>
