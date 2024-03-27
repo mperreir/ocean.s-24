@@ -4,51 +4,50 @@
       <!-- Chat Header -->
       <h1>Green Data</h1>
     </header>
-    
+
     <div class="chat-window">
-        <!-- Chat messages -->
-        <div class="chat-window">
-          <div class="message right" v-for="message in messages" :key="message.id">
-            <div v-if="message.type === 'text'">
-              {{ message.content }}
-            </div>
-            <img v-else-if="message.type === 'image'" :src="message.content" alt="Sent Image" />
+      <!-- Chat messages -->
+      <div class="chat-window">
+        <div id="init-message" class="message">Salut ! Envoie-moi des messages, photos ou vidéos pour voir le trajet de
+          tes données en temps réel !</div>
+        <div class="message right" v-for="message in messages" :key="message.id">
+          <div v-if="message.type === 'text'">
+            {{ message.content }}
           </div>
+          <img v-else-if="message.type === 'image'" :src="message.content" alt="Sent Image" />
         </div>
       </div>
+    </div>
 
     <div class="chat-input">
       <!-- Message Input -->
-      <el-input v-model="input" style="width: 240px" placeholder="Please input" />
+      <input id="inputmsg" v-model="input" placeholder="Écrivez un message…" />
 
-      <!-- Image and Video Upload -->
-      <el-button type="primary" style="margin-left: 10px" @click="drawer = true">
-        image
-      </el-button>
-      <el-button type="primary" style="margin-left: 10px" @click="drawer1 = true">
-        video
-      </el-button>
+      <div class="chat-input-buttons">
+        <!-- Image and Video Upload -->
+        <button style="chat-button" @click="drawer = true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="em" viewBox="0 0 256 256">
+            <path fill="currentColor"
+              d="M224 160V48a16 16 0 0 0-16-16H48a16 16 0 0 0-16 16v160a16 16 0 0 0 16 16h160a16 16 0 0 0 16-16v-48ZM208 48v92.7L179.3 112a16.1 16.1 0 0 0-22.6 0L112 156.7L91.3 136a16.1 16.1 0 0 0-22.6 0L48 156.7V48Zm0 160H48v-28.7l32-32l20.7 20.7a16.1 16.1 0 0 0 22.6 0l44.7-44.7l40 40V208ZM91.5 100.5A11.9 11.9 0 0 1 88 92a12 12 0 0 1 24 0a12 12 0 0 1-12 12a12.3 12.3 0 0 1-8.5-3.5Z">
+            </path>
+          </svg>
+        </button>
+        <button style="chat-button" @click="drawer1 = true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 256 256"><path fill="currentColor" d="M244 73.1a7.7 7.7 0 0 0-8 0l-44 25.1V92a40 40 0 0 0-40-40H24A16 16 0 0 0 8 68v96a40 40 0 0 0 40 40h128a16 16 0 0 0 16-16v-30.2l44 25.1a8.3 8.3 0 0 0 4 1.1a8 8 0 0 0 4-1.1a7.8 7.8 0 0 0 4-6.9V80a7.8 7.8 0 0 0-4-6.9ZM176 188H48a24.1 24.1 0 0 1-24-24V68h128a24.1 24.1 0 0 1 24 24v96Zm56-25.8l-40-22.8v-22.8l40-22.8Z"/></svg>
+        </button>
 
-      <el-drawer
-        v-model="drawer"
-        title="choose an image"
-        :direction="direction"
-      >
-        <div class="image-list">
-          <img v-for="img in images" :src="img" :key="img" @click="sendMessage('image', img)" class="image-item" />
-        </div>
-      </el-drawer>
+        <el-drawer v-model="drawer" title="Envoyer une image" :direction="direction">
+          <div class="image-list">
+            <img v-for="img in images" :src="img" :key="img" @click="sendMessage('image', img)" class="image-item" />
+          </div>
+        </el-drawer>
 
-      <el-drawer
-        v-model="drawer1"
-        title="choose a video"
-        :direction="direction"
-      >
-        
-      </el-drawer>
+        <el-drawer v-model="drawer1" title="Envoyer une vidéo" :direction="direction">
+        </el-drawer>
 
-      <!-- Send Button -->
-      <el-button type="primary" style="margin-left: 10px" @click="sendMessage('text', input.value)">send</el-button>
+        <!-- Send Button -->
+        <button class="chat-send" @click="sendMessage('text', input.value)"> Envoyer </button>
+      </div>
     </div>
   </div>
 </template>
@@ -81,63 +80,135 @@ function sendMessage(type, content) {
       content: content
     }
     messages.value.push(newMessage)
-    drawer.value = false 
+    drawer.value = false
   }
 }
-
 
 </script>
 
 <style>
-#app{
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900');
+
+html,
+body {
+  margin: 0px;
+  padding: 0px;
+  font-family: Outfit, sans-serif;
+}
+
+#app {
   display: flex;
   flex-direction: column;
 }
-header{
+
+h1 {
+  position: fixed;
+  background-color: #fff;
+  width: 100%;
+  top: 0px;
   display: flex;
-  align-items: center; 
-  justify-content: center; 
+  align-items: center;
+  justify-content: center;
+  padding: 4vh 2vh;
+  margin: 0px;
+  opacity: .9;
+  backdrop-filter: blur(8px);
+  font-size: 1.25rem;
 }
+
 .chat-window {
-  width: 90vw; 
-  margin: auto;
+  width: 90vw;
+  margin-top: 10vh;
+  margin: 6vh auto;
   overflow-y: auto;
-  height: 80vh;   
   border-radius: 10px;
   display: flex;
-  flex-direction: column-reverse; 
-  align-items: flex-end; 
+  flex-direction: column;
+  align-items: flex-end;
 }
 
 .message {
   max-width: 60%;
-  margin: 10px;
-  padding: 10px;
-  border-radius: 20px;
-  background-color: #9ecffa; 
+  margin: 4px;
+  padding: 12px 16px;
+  border-radius: 24px 24px 2px 24px;
+  background-color: #ebeaea;
   word-wrap: break-word;
+  font-size: 1rem;
+  font-weight: 300;
 }
 
-.user-message {
-  align-self: flex-end; 
-  background-color: #a0e7e5; 
+#init-message {
+  border-radius: 24px 24px 24px 2px;
+  background-color: #9747ff;
+  color: white;
+  align-self: flex-start;
 }
-.chat-input{
-  margin-top: 2vh;
+
+.chat-input {
+  padding: 2vh 2vh 4vh 2vh;
   display: flex;
-  align-items: center; 
-  justify-content: center; 
+  gap: 16px;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  bottom: 0px;
+  width: calc(100% - 2vh - 16px);
+  background-color: #fff;
 }
+
+.chat-input-buttons {
+  display: flex;
+}
+
+.chat-button {
+  display: block;
+}
+
+.chat-send {
+  display: block;
+  font-family: "Outfit";
+  font-weight: 700;
+  color: #4600a2;
+}
+
+button {
+  background-color: transparent;
+  border: none;
+  height: 48px;
+  width: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: .75;
+}
+
 .image-list {
   display: flex;
   flex-wrap: wrap;
+  height: fit-content;
 }
+
 .image-item {
   width: 100px;
-  height: 100px;
-  margin: 10px;
+  margin: 16px;
   cursor: pointer;
 }
+ 
+input {
+  border-radius: 100px;
+  padding: 16px 18px;
+  border: none;
+  background-color: #ebeaea;
+  color: #000000;
+  width: 100%;
+  font-family: Outfit;
+}
+
+img {
+  border-radius: 16px;
+}
+
 
 
 </style>
