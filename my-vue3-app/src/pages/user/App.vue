@@ -74,7 +74,6 @@ const drawer1 = ref(false)
 const direction = ref('btt')
 const images = ref([im1,im2,im3])
 const videos = ref([v1,v2,v3,v4])
-
 const messages = ref([])
 
 function sendMessage(type, content) {
@@ -116,7 +115,10 @@ function sendMessage(type, content) {
 
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900');
+@font-face {
+    font-family: Outfit;
+    src: url('./assets/fonts/Outfit-VariableFont_wght.ttf');
+}
 
 html,
 body {
