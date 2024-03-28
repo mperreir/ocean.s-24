@@ -5,20 +5,14 @@
 npm install
 ```
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
 ### Compiles and minifies for production
 ```
 npm run build
 ```
+cd server
+node app.js
 
-### Lints and fixes files
-```
-npm run lint
-```
-
+go to localhost:8080/datapage
+go to localhost:8080/userpage
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
