@@ -58,7 +58,7 @@
 
 <script setup>
 import {io} from 'socket.io-client'
-const socket = io('http://localhost:8080')
+const socket = io('http://localhost:3010')
 import { ref } from 'vue'
 import im1 from './/assets/images/i1.png'
 import im2 from './/assets/images/i2.png'
@@ -67,6 +67,7 @@ import v1 from './/assets/videos/v1.png'
 import v2 from './/assets/videos/v2.png'
 import v3 from './/assets/videos/v3.png'
 import v4 from './/assets/videos/v4.png'
+import s1 from './/assets/notificationsounds/discord.mp3'
 
 const input = ref('')
 const drawer = ref(false)
@@ -74,6 +75,7 @@ const drawer1 = ref(false)
 const direction = ref('btt')
 const images = ref([im1,im2,im3])
 const videos = ref([v1,v2,v3,v4])
+const sound = new Audio(s1);
 
 const messages = ref([])
 
@@ -111,6 +113,7 @@ function sendMessage(type, content) {
     socket.emit('send message', newMessage);
     drawer1.value = false
   }
+  sound.play();
 }
 
 </script>
