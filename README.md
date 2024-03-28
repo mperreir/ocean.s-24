@@ -1,2 +1,15 @@
-# ocean.s-24
-Source code of the Ocean.s-24 projects
+# Eolio project - Ocean project 2024 
+
+## Authors
+- ### Polytech Nantes
+  - Yann
+  - Péquin Benjamin
+  - Gobin Arthur
+  - Douxami Baptiste
+    
+-  ### L'École de design Nantes Atlantique
+  - Lecoq Pauline
+  - Texier-Proust Romain
+  - Koko Moukory
+
+  
