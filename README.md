@@ -10,7 +10,7 @@
  - ### L'École de design Nantes Atlantique
    - Lecoq Pauline
    - Texier-Proust Romain
-   - Koko Moukory
+   - Koko Moukory Gabriel Timothée
 
 ## Prérequis
 
