@@ -4,6 +4,8 @@ const http = require('http');
 const app = express();
 const server = http.createServer(app);
 
+const path = require('path')
+
 const io = require("socket.io")(server, {
     cors: {
       origin: ["http://localhost:8080","http://172.20.10.13:8080"],
@@ -11,9 +13,16 @@ const io = require("socket.io")(server, {
     }
   });
   
-app.get('/', (req, res) => {
-  res.send('Server is running');
+app.use(express.static(path.join(__dirname, '../dist')));
+
+app.get('/userpage', (req, res) => {
+  res.sendFile(path.join(__dirname, '../dist', 'user.html'));
 });
+
+app.get('/datapage', (req, res) => {
+  res.sendFile(path.join(__dirname, '../dist', 'data.html'));
+});
+
 
 io.on('connection', (socket) => {
   console.log('A user connected');
@@ -25,5 +34,5 @@ io.on('connection', (socket) => {
   });
 });
 
-const PORT = 3000;
+const PORT = 8080;
 server.listen( PORT, () => console.log(`Server running on port ${PORT}`));

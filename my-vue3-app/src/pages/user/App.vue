@@ -58,7 +58,7 @@
 
 <script setup>
 import {io} from 'socket.io-client'
-const socket = io('http://localhost:3000')
+const socket = io('http://localhost:8080')
 import { ref } from 'vue'
 import im1 from './/assets/images/i1.png'
 import im2 from './/assets/images/i2.png'
@@ -76,6 +76,7 @@ const images = ref([im1,im2,im3])
 const videos = ref([v1,v2,v3,v4])
 
 const messages = ref([])
+
 
 function sendMessage(type, content) {
   const address='123.45.67.890'

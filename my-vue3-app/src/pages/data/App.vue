@@ -31,8 +31,7 @@
 <script setup>
 import{io} from 'socket.io-client'
 import { ref, onMounted} from 'vue';
-const socket = io('http://localhost:3000')
-
+const socket = io('http://localhost:8080')
 // const tableData = [
 //   {
 //     address: '123.45.67.890',
