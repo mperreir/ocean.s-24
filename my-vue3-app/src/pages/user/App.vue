@@ -15,6 +15,7 @@
             {{ message.content }}
           </div>
           <img v-else-if="message.type === 'image'" :src="message.content" alt="Sent Image" />
+          <img v-else-if="message.type === 'video'" :src="message.content" alt="Sent Videp" />
         </div>
       </div>
     </div>
@@ -43,6 +44,9 @@
         </el-drawer>
 
         <el-drawer v-model="drawer1" title="Envoyer une vidéo" :direction="direction">
+          <div class="video-list">
+            <img v-for="v in videos" :src="v" :key="v" @click="sendMessage('video', v)" class="video-item" />
+          </div>
         </el-drawer>
 
         <!-- Send Button -->
@@ -56,13 +60,20 @@
 import {io} from 'socket.io-client'
 const socket = io('http://localhost:3000')
 import { ref } from 'vue'
-import img from './/assets/logo.png'
+import im1 from './/assets/images/i1.png'
+import im2 from './/assets/images/i2.png'
+import im3 from './/assets/images/i3.png'
+import v1 from './/assets/videos/v1.png'
+import v2 from './/assets/videos/v2.png'
+import v3 from './/assets/videos/v3.png'
+import v4 from './/assets/videos/v4.png'
 
 const input = ref('')
 const drawer = ref(false)
 const drawer1 = ref(false)
 const direction = ref('btt')
-const images = ref([img])
+const images = ref([im1,im2,im3])
+const videos = ref([v1,v2,v3,v4])
 
 const messages = ref([])
 

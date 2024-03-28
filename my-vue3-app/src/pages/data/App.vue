@@ -51,11 +51,19 @@ const tableData = ref([]);
 onMounted(() => {
 
   socket.on('new message', (newMessage) => {
-
-    tableData.value.push({
-      address: newMessage.address,
-      action: `a envoyé un ${newMessage.type} (${newMessage.content.length} bytes)` // 你需要根据消息类型调整显示的文本
-    });
+    if(newMessage.type === 'video'){
+        tableData.value.push({
+        address: newMessage.address,
+        action: `a envoyé un ${newMessage.type} (${newMessage.content.length*100} bytes)` 
+      });
+    }
+    else{
+        tableData.value.push({
+        address: newMessage.address,
+        action: `a envoyé un ${newMessage.type} (${newMessage.content.length} bytes)` 
+      });
+    }
+    
   });
 });
 </script>
