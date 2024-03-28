@@ -2,7 +2,7 @@
 
 ## Auteurs
 - ### Polytech Nantes
-  - Yann
+  - Yann Jianhui
   - Péquin Benjamin
   - Gobin Arthur
   - Douxami Baptiste
