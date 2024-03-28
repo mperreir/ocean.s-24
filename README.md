@@ -7,10 +7,10 @@
   - Gobin Arthur
   - Douxami Baptiste
     
--  ### L'École de design Nantes Atlantique
-  - Lecoq Pauline
-  - Texier-Proust Romain
-  - Koko Moukory
+ - ### L'École de design Nantes Atlantique
+   - Lecoq Pauline
+   - Texier-Proust Romain
+   - Koko Moukory
 
 ## Prérequis
 
