@@ -140,8 +140,8 @@ h1 {
   justify-content: center;
   padding: 4vh 2vh;
   margin: 0px;
-  opacity: .9;
-  backdrop-filter: blur(8px);
+  background-color: rgba(255, 255, 255, .9);
+  backdrop-filter: blur(4px);
   font-size: 1.25rem;
 }
 
