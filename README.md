@@ -42,11 +42,11 @@ git clone https://github.com/arthurgbn/ocean.s-24-groupe-3.git
 ```
 ## Lancement du projet 
 
-1 - Ouvrez **Arduino** et importer le fichier .ino
-2 - Importer les librairies (Sketch -> Include Library -> add .ZIP library)
-3 - Upload le programme sur la carte
+- 1 - Ouvrez **Arduino** et importer le fichier .ino
+- 2 - Importer les librairies (Sketch -> Include Library -> add .ZIP library)
+- 3 - Upload le programme sur la carte
 
-4 - Ouvrez TouchDesigner et importer le fichier .toe
-5 - Ouvrez les 2 fênetres (Cliquez sur les éléments "window", puis dans les paramètres -> "open as Separate window")
+- 4 - Ouvrez TouchDesigner et importer le fichier .toe
+- 5 - Ouvrez les 2 fênetres (Cliquez sur les éléments "window", puis dans les paramètres -> "open as Separate window")
 
   
