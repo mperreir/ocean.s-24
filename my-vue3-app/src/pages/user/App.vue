@@ -40,13 +40,13 @@
           </svg>
         </button>
 
-        <el-drawer v-model="drawer" title="Envoyer une image" :direction="direction">
+        <el-drawer v-model="drawer" title="Envoyer une image" :direction="direction" size="50%">
           <div class="image-list">
             <img v-for="img in images" :src="img" :key="img" @click="sendMessage('image', img)" class="image-item" />
           </div>
         </el-drawer>
 
-        <el-drawer v-model="drawer1" title="Envoyer une vidéo" :direction="direction">
+        <el-drawer v-model="drawer1" title="Envoyer une vidéo" :direction="direction" size="50%">
           <div class="image-list">
             <img v-for="v in videos" :src="v" :key="v" @click="sendMessage('video', v)" class="image-item" />
           </div>
