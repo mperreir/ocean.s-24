@@ -15,7 +15,7 @@
             {{ message.content }}
           </div>
           <img v-else-if="message.type === 'image'" :src="message.content" alt="Sent Image" />
-          <img v-else-if="message.type === 'video'" :src="message.content" alt="Sent Videp" />
+          <img v-else-if="message.type === 'video'" :src="message.content" alt="Sent Video" />
         </div>
       </div>
     </div>
@@ -44,8 +44,8 @@
         </el-drawer>
 
         <el-drawer v-model="drawer1" title="Envoyer une vidéo" :direction="direction">
-          <div class="video-list">
-            <img v-for="v in videos" :src="v" :key="v" @click="sendMessage('video', v)" class="video-item" />
+          <div class="image-list">
+            <img v-for="v in videos" :src="v" :key="v" @click="sendMessage('video', v)" class="image-item" />
           </div>
         </el-drawer>
 
@@ -58,7 +58,7 @@
 
 <script setup>
 import {io} from 'socket.io-client'
-const socket = io('http://localhost:3010')
+const socket = io('http://localhost:3010');
 import { ref } from 'vue'
 import im1 from './/assets/images/i1.png'
 import im2 from './/assets/images/i2.png'
@@ -67,7 +67,6 @@ import v1 from './/assets/videos/v1.png'
 import v2 from './/assets/videos/v2.png'
 import v3 from './/assets/videos/v3.png'
 import v4 from './/assets/videos/v4.png'
-import s1 from './/assets/notificationsounds/discord.mp3'
 
 const input = ref('')
 const drawer = ref(false)
@@ -75,13 +74,16 @@ const drawer1 = ref(false)
 const direction = ref('btt')
 const images = ref([im1,im2,im3])
 const videos = ref([v1,v2,v3,v4])
-const sound = new Audio(s1);
 
-const messages = ref([])
+const messages = ref([]);
+const fakeUserIP = `${getRandomArbitrary(1, 255)}.${getRandomArbitrary(1, 255)}.${getRandomArbitrary(1, 255)}.${getRandomArbitrary(1, 255)}`;
 
+function getRandomArbitrary(min, max) {
+  return String(Math.floor(Math.random() * (max - min) + min));
+}
 
 function sendMessage(type, content) {
-  const address='123.45.67.890'
+  const address = fakeUserIP;
   if (type === 'text' && input.value.trim()) {
     const newMessage = {
       id: Date.now(),
@@ -113,7 +115,6 @@ function sendMessage(type, content) {
     socket.emit('send message', newMessage);
     drawer1.value = false
   }
-  sound.play();
 }
 
 </script>
@@ -221,12 +222,12 @@ button {
 
 .image-list {
   display: flex;
-  flex-wrap: wrap;
   height: fit-content;
+  overflow-x: scroll;
 }
 
 .image-item {
-  width: 100px;
+  height: 200px;
   margin: 16px;
   cursor: pointer;
 }
@@ -244,7 +245,5 @@ input {
 img {
   border-radius: 16px;
 }
-
-
 
 </style>

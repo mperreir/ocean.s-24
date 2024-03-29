@@ -17,7 +17,7 @@
             <div class="slide slide2">
               <h4>ENERGIE</h4>
               <p class="big-text">50%</p>
-              <p class="text">de la facture d’un datacenter correspond aux <strong> dépenses énergétiques</strong> liées
+              <p class="text">de la facture d’un datacenter correspond aux <strong>dépenses énergétiques</strong> liées
                 au refroidissement des serveurs.</p>
             </div>
             <div class="slide slide3">
@@ -41,8 +41,10 @@
             <h3>user_log</h3>
           </div>
           <div class="logs-content">
-            <div class="logs-text">
-              {{ data.content }}
+            <div v-for="log in data" :key="log.id" class="logs-text">
+              <div>
+                <p>{{ log.address }} a envoyé {{ log.article }} <strong>{{ log.type }}</strong> ({{ log.size }})</p>
+              </div>
             </div>
           </div>
         </section>
@@ -54,30 +56,35 @@
         </section>
       </main>
     </div>
-    <iframe style="width:100vw;height:100vh;border:0px;position:absolute;top:0;left:0;z-index:1;"
-      src="https://cables.gl/view/6602dd7a4a0d23057b44297b"></iframe>
+    <iframe style="width:100vw; height:100vh; border:0px; position:absolute; top:0; left:0; z-index:1;"
+    src="https://cables.gl/view/6602dd7a4a0d23057b44297b"></iframe>
   </div>
 </template>
 
 <script setup>
-import{io} from 'socket.io-client'
-import { ref, onMounted} from 'vue';
+import { io } from 'socket.io-client'
+import { ref, onMounted } from 'vue';
 
-const socket = io('http://localhost:3010')
-// const tableData = [
-//   {
-//     address: '123.45.67.890',
-//     action: 'a envoyé un message (28 o)'
-//   },
-//   {
-//     address: '123.45.67.890',
-//     action: 'a envoyé un image (28 kb)'
-//   },
-//   {
-//     address: '123.45.67.890',
-//     action: 'a envoyé un video (28 mb)'
-//   },
-// ]
+import s1 from './/assets/notificationsounds/android.mp3'
+import s2 from './/assets/notificationsounds/discord.mp3'
+import s3 from './/assets/notificationsounds/iphone.mp3'
+import s4 from './/assets/notificationsounds/iphone1.mp3'
+import s5 from './/assets/notificationsounds/iphone2.mp3'
+import s6 from './/assets/notificationsounds/messenger.mp3'
+import s7 from './/assets/notificationsounds/samsung.mp3'
+import s8 from './/assets/notificationsounds/snapchat.mp3'
+
+const socket = io('http://localhost:3010');
+
+const sound1 = new Audio(s1);
+const sound2 = new Audio(s2);
+const sound3 = new Audio(s3);
+const sound4 = new Audio(s4);
+const sound5 = new Audio(s5);
+const sound6 = new Audio(s6);
+const sound7 = new Audio(s7);
+const sound8 = new Audio(s8);
+const sounds = [sound1, sound2, sound3, sound4, sound5, sound6, sound7, sound8];
 
 document.addEventListener("DOMContentLoaded", function () {
   setInterval(changeSlide, 10000);
@@ -90,45 +97,50 @@ function changeSlide() {
   document.querySelector(currentSlide).style.display = "none";
 
   if (currentSlideNumber > 3) {
-    document.querySelector(".slide1").style.display = "block";
-    document.querySelector(".slide2").style.display = "block";
-    document.querySelector(".slide3").style.display = "block";
-    document.querySelector(".slide4").style.display = "block";
+    document.querySelectorAll(".slide").forEach(slide => slide.style.display = "block");
     currentSlideNumber = 0;
   }
-
 }
 
-const tableData = ref([]);
+function playSound() {
+  let r = Math.floor(Math.random() * sounds.length);
+  sounds[r].play();
+}
+
+const data = ref([]);
 onMounted(() => {
 
   socket.on('new message', (newMessage) => {
     if (newMessage.type === 'video') {
-      tableData.value.push({
+      data.value.push({
+        id: newMessage.id,
         address: newMessage.address,
-        action: `a envoyé un ${newMessage.type} (${newMessage.content.length * 100} octets)`
+        article: "une",
+        type: "vidéo",
+        size: "45 Mo"
       });
     }
-    else {
-      tableData.value.push({
+    else if (newMessage.type === 'image') {
+      data.value.push({
+        id: newMessage.id,
         address: newMessage.address,
-        action: `a envoyé un ${newMessage.type} (${newMessage.content.length} octets)`
+        article: "une",
+        type: "image",
+        size: "1.3 Mo"
       });
     }
-
+    else if (newMessage.type === 'text') {
+      data.value.push({
+        id: newMessage.id,
+        address: newMessage.address,
+        article: "un",
+        type: "message",
+        size: String(newMessage.content.length) + " o"
+      });
+    }
+    playSound();
   });
 });
-</script>
-<script>
-const data = ref([]);
-
-document.addEventListener("click", function () {
-  data.value.push({
-    address: "newMessage.address",
-    action: "a envoyé un newMessage.type"
-  });
-  console.log(data);
-})
 </script>
 
 <style>
@@ -303,6 +315,7 @@ h4 {
   margin: 0px 16px;
   font-size: .75rem;
   font-weight: 200;
+  line-height: 150%;
   word-wrap: break-word;
 }
 
