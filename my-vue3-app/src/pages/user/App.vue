@@ -92,7 +92,6 @@ document.addEventListener("DOMContentLoaded", () => {
     sendButton.style.display = "block";
     imageButton.style.display = "none";
     videoButton.style.display = "none";
-    console.log(chatWindow.className)
   });
 
   chatWindow.addEventListener("DOMNodeInserted", (e) => {
@@ -100,6 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
       sendButton.style.display = "none";
       imageButton.style.display = "flex";
       videoButton.style.display = "flex";
+      window.scrollTo(0, document.body.scrollHeight);
     }
   });
 });
@@ -163,6 +163,7 @@ body {
 #app {
   display: flex;
   flex-direction: column;
+  
 }
 
 h1 {
@@ -182,7 +183,7 @@ h1 {
 
 .chat-window {
   width: 90vw;
-  margin-top: 10vh;
+  padding-bottom: 4px;
   margin: 6vh auto;
   overflow-y: auto;
   border-radius: 10px;
@@ -268,6 +269,7 @@ input {
   color: #000000;
   width: 100%;
   font-family: Outfit;
+  font-size: 1rem;
 }
 
 img {
