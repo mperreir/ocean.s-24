@@ -218,11 +218,12 @@ h3 {
 .slides {
   position: relative;
   width: 42vw;
+  min-height: 45vh;
   border-radius: 16px;
   border: solid #CFF0FD 2px;
   background-color: #0a111979;
   backdrop-filter: blur(48px);
-  top: 10vh;
+  top: 15vh;
   left: 5vw;
   overflow: hidden;
 }
@@ -287,10 +288,10 @@ h4 {
 
 .logs {
   position: absolute;
-  bottom: 10vh;
-  left: 28vw;
+  bottom: 12vh;
+  left: 29vw;
   height: 30vh;
-  width: 26vw;
+  width: 22vw;
   background-color: #0a1119c7;
   border-radius: 16px;
   color: #CFF0FD;
@@ -322,6 +323,7 @@ h4 {
 main {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   width: 50%;
   height: 100%;
 }
