@@ -52,7 +52,7 @@
       <main>
         <h2>Green Data</h2>
         <section class="images">
-          <img class="maqutte" src="./assets/maqutte.png" alt="">
+          <img class="maqutte" src="./assets/maqutte.gif" alt="">
         </section>
       </main>
     </div>
@@ -330,11 +330,13 @@ main {
 
 .images {
   display: flex;
-  align-items: center;
+  align-items: stretch;
   justify-content: center;
 }
 
 .maqutte {
-  width: 70%;
+  width: 80%;
+  height: 70%;
+  object-fit: contain;
 }
 </style>

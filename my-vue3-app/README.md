@@ -12,7 +12,7 @@ npm run build
 cd server
 node app.js
 
-go to localhost:8080/datapage
-go to localhost:8080/userpage
+go to localhost:3010/datapage
+go to localhost:3010/userpage
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
