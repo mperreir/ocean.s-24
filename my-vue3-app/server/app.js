@@ -1,7 +1,8 @@
 const express = require('express');
 const http = require('http');
 
-const PORT = 3010;
+const PORT = process.env.PORT || 3010;
+
 module.exports = PORT;
 
 
@@ -23,7 +24,7 @@ var addr_server = server.listen(PORT, function () {
 
 const io = require("socket.io")(server, {
     cors: {
-      origin: [`http://localhost:${PORT}/`,`https://hyblab.polytech.univ-nantes.fr`],
+      origin: [`http://localhost:${PORT}/`,"http://hyblab.polytech.univ-nantes.fr",`https://hyblab.polytech.univ-nantes.fr:${PORT}/`,"http://192.168.1.153",`https://192.168.1.153:${PORT}/`],
       methods: ["GET", "POST"]
     }
   });

@@ -61,7 +61,7 @@
 
 <script setup>
 import { io } from 'socket.io-client'
-const socket = io('http://localhost:3010');
+const socket = io(['http://localhost:3010','http://192.168.1.153:3010/',"http://192.168.1.153"]);
 import { ref } from 'vue';
 import im1 from './/assets/images/i1.png'
 import im2 from './/assets/images/i2.png'
