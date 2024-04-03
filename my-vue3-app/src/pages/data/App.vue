@@ -62,88 +62,112 @@
 </template>
 
 <script setup>
-import { io } from 'socket.io-client'
 import { ref, onMounted } from 'vue';
 
-import s1 from './/assets/notificationsounds/android.mp3'
-import s2 from './/assets/notificationsounds/discord.mp3'
-import s3 from './/assets/notificationsounds/iphone.mp3'
-import s4 from './/assets/notificationsounds/iphone1.mp3'
-import s5 from './/assets/notificationsounds/iphone2.mp3'
-import s6 from './/assets/notificationsounds/messenger.mp3'
-import s7 from './/assets/notificationsounds/samsung.mp3'
-import s8 from './/assets/notificationsounds/snapchat.mp3'
+// 导入通知声音
+import s1 from './assets/notificationsounds/android.mp3';
+import s2 from './assets/notificationsounds/discord.mp3';
+import s3 from './assets/notificationsounds/iphone.mp3';
+import s4 from './assets/notificationsounds/iphone1.mp3';
+import s5 from './assets/notificationsounds/iphone2.mp3';
+import s6 from './assets/notificationsounds/messenger.mp3';
+import s7 from './assets/notificationsounds/samsung.mp3';
+import s8 from './assets/notificationsounds/snapchat.mp3';
 
-const socket = io(['ws://hyblab.polytech.univ-nantes.fr/ocean-2/','http://localhost:3010','http://192.168.1.153:3010/',"http://192.168.1.153",
-                    "http://hyblab.polytech.univ-nantes.fr","http://hyblab.polytech.univ-nantes.fr:3010",
-                    "http://hyblab.polytech.univ-nantes.fr/ocean-2",
-                    "https://hyblab.polytech.univ-nantes.fr","https://hyblab.polytech.univ-nantes.fr:3010",
-                    "https://hyblab.polytech.univ-nantes.fr/ocean-2"]);
-const sound1 = new Audio(s1);
-const sound2 = new Audio(s2);
-const sound3 = new Audio(s3);
-const sound4 = new Audio(s4);
-const sound5 = new Audio(s5);
-const sound6 = new Audio(s6);
-const sound7 = new Audio(s7);
-const sound8 = new Audio(s8);
-const sounds = [sound1, sound2, sound3, sound4, sound5, sound6, sound7, sound8];
+// 初始化声音和数据
+const sounds = [new Audio(s1), new Audio(s2), new Audio(s3), new Audio(s4), new Audio(s5), new Audio(s6), new Audio(s7), new Audio(s8)];
+const data = ref([]);
 
-document.addEventListener("DOMContentLoaded", function () {
-  setInterval(changeSlide, 10000);
-})
-
-let currentSlideNumber = 0;
-function changeSlide() {
-  currentSlideNumber++;
-  let currentSlide = ".slide" + currentSlideNumber;
-  document.querySelector(currentSlide).style.display = "none";
-
-  if (currentSlideNumber > 3) {
-    document.querySelectorAll(".slide").forEach(slide => slide.style.display = "block");
-    currentSlideNumber = 0;
-  }
-}
-
+// 定义播放声音的函数
 function playSound() {
   let r = Math.floor(Math.random() * sounds.length);
   sounds[r].play();
 }
 
-const data = ref([]);
-onMounted(() => {
+// 定期获取消息数据的函数
+async function fetchMessages() {
+  try {
+    const response = await fetch('http://localhost:3010/ocean-2/messages');
+    if (response.ok) {
+      const messages = await response.json();
+      data.value = messages.map(msg => ({
+        id: msg.id,
+        address: msg.address,
+        article: msg.type === 'video' ? "une" : "un",
+        type: msg.type === 'text' ? "message" : msg.type,
+        size: msg.type === 'text' ? `${msg.content.length} o` : msg.type === 'image' ? "1.3 Mo" : "45 Mo"
+      }));
+      playSound();
+    } else {
+      throw new Error('Failed to fetch messages.');
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
 
-  socket.on('new message', (newMessage) => {
-    if (newMessage.type === 'video') {
-      data.value.push({
-        id: newMessage.id,
-        address: newMessage.address,
-        article: "une",
-        type: "vidéo",
-        size: "45 Mo"
-      });
-    }
-    else if (newMessage.type === 'image') {
-      data.value.push({
-        id: newMessage.id,
-        address: newMessage.address,
-        article: "une",
-        type: "image",
-        size: "1.3 Mo"
-      });
-    }
-    else if (newMessage.type === 'text') {
-      data.value.push({
-        id: newMessage.id,
-        address: newMessage.address,
-        article: "un",
-        type: "message",
-        size: String(newMessage.content.length) + " o"
-      });
-    }
-    playSound();
-  });
+// 组件挂载时获取消息，并设置定时器定期更新消息
+onMounted(() => {
+  fetchMessages();
+  setInterval(fetchMessages, 5000); // 每5秒更新一次，调整间隔以适应实际需求
 });
+
+// import { ref, onMounted } from 'vue';
+
+// // Import notification sounds
+// import s1 from './assets/notificationsounds/android.mp3';
+// import s2 from './assets/notificationsounds/discord.mp3';
+// import s3 from './assets/notificationsounds/iphone.mp3';
+// import s4 from './assets/notificationsounds/iphone1.mp3';
+// import s5 from './assets/notificationsounds/iphone2.mp3';
+// import s6 from './assets/notificationsounds/messenger.mp3';
+// import s7 from './assets/notificationsounds/samsung.mp3';
+// import s8 from './assets/notificationsounds/snapchat.mp3';
+
+// // Create audio objects for each sound
+// const sounds = [new Audio(s1), new Audio(s2), new Audio(s3), new Audio(s4), new Audio(s5), new Audio(s6), new Audio(s7), new Audio(s8)];
+
+// const data = ref([]);
+
+// // Fetch messages from the server and update the data reactive property
+// async function fetchMessages() {
+//     try {
+//         const response = await fetch('http://localhost:3010/ocean-2/messages');
+//         if (!response.ok) throw new Error('Network response was not ok.');
+//         const newMessages = await response.json();
+//         if (newMessages.length > data.value.length) {
+//             playSound(); // Play sound if there are new messages
+//             data.value = newMessages; // Update local messages list
+//         }
+//     } catch (error) {
+//         console.error('Error fetching messages:', error);
+//     }
+// }
+
+// // Play a random notification sound
+// function playSound() {
+//     const randomSoundIndex = Math.floor(Math.random() * sounds.length);
+//     sounds[randomSoundIndex].play();
+// }
+
+// onMounted(() => {
+//     fetchMessages(); // Fetch messages immediately once the component is mounted
+//     setInterval(fetchMessages, 5000); // Continue fetching messages every 5 seconds
+
+//     // Set up the slide change logic
+//     let currentSlideNumber = 0;
+//     setInterval(() => {
+//         currentSlideNumber++;
+//         let currentSlide = ".slide" + currentSlideNumber;
+//         document.querySelector(currentSlide)?.style.display = "none";
+
+//         if (currentSlideNumber > 3) {
+//             document.querySelectorAll(".slide").forEach(slide => slide.style.display = "block");
+//             currentSlideNumber = 0;
+//         }
+//     }, 10000); // Change slide every 10 seconds
+// });
+
 </script>
 
 <style>
