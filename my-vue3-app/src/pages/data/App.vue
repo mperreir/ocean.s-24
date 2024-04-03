@@ -64,7 +64,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 
-// 导入通知声音
+
 import s1 from './assets/notificationsounds/android.mp3';
 import s2 from './assets/notificationsounds/discord.mp3';
 import s3 from './assets/notificationsounds/iphone.mp3';
@@ -74,17 +74,17 @@ import s6 from './assets/notificationsounds/messenger.mp3';
 import s7 from './assets/notificationsounds/samsung.mp3';
 import s8 from './assets/notificationsounds/snapchat.mp3';
 
-// 初始化声音和数据
+
 const sounds = [new Audio(s1), new Audio(s2), new Audio(s3), new Audio(s4), new Audio(s5), new Audio(s6), new Audio(s7), new Audio(s8)];
 const data = ref([]);
 
-// 定义播放声音的函数
+
 function playSound() {
   let r = Math.floor(Math.random() * sounds.length);
   sounds[r].play();
 }
 
-// 定期获取消息数据的函数
+
 async function fetchMessages() {
   try {
     const response = await fetch('http://localhost:3010/ocean-2/messages');
@@ -106,10 +106,10 @@ async function fetchMessages() {
   }
 }
 
-// 组件挂载时获取消息，并设置定时器定期更新消息
+
 onMounted(() => {
   fetchMessages();
-  setInterval(fetchMessages, 5000); // 每5秒更新一次，调整间隔以适应实际需求
+  setInterval(fetchMessages, 5000); 
 });
 
 // import { ref, onMounted } from 'vue';

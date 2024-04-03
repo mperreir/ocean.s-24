@@ -1,13 +1,13 @@
 const express = require('express');
 const http = require('http');
 const path = require('path');
-const cors = require('cors'); // 添加CORS支持
+const cors = require('cors'); 
 
 const PORT = process.env.PORT || 3010;
 const app = express();
 const server = http.createServer(app);
 
-// 配置CORS
+
 app.use(cors({
   origin: [
     `http://localhost:${PORT}/`, 
@@ -23,12 +23,12 @@ app.use(cors({
   methods: ["GET", "POST"]
 }));
 
-app.use(express.json()); // 用于解析JSON类型的请求体
+app.use(express.json()); 
 app.use('/ocean-2', express.static(path.join(__dirname, '../dist')));
 
-let messages = []; // 存储消息的数组
+let messages = []; 
 
-// 处理POST请求，接收消息
+
 app.post('/ocean-2/messages', (req, res) => {
     const message = req.body;
     message.id = Date.now();
@@ -36,7 +36,7 @@ app.post('/ocean-2/messages', (req, res) => {
     res.status(201).send({ message: 'Message received', id: message.id });
 });
 
-// 处理GET请求，发送消息
+
 app.get('/ocean-2/messages', (req, res) => {
     res.status(200).json(messages);
 });
