@@ -8,8 +8,8 @@ const PORT = process.env.PORT || 3010;
 
 // Assuming you have 'certificate.pem' and 'privatekey.pem' files
 const options = {
-  key: fs.readFileSync(path.join(__dirname, 'privatekey.pem')),
-  cert: fs.readFileSync(path.join(__dirname, 'certificate.pem'))
+  key: fs.readFileSync(path.join(__dirname, '../../../privatekey.pem')),
+  cert: fs.readFileSync(path.join(__dirname, '../../../certificate.pem'))
 };
 
 const app = express();
