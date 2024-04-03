@@ -29,7 +29,6 @@ const io = require("socket.io")(server, {
     }
 });
 
-
 app.use('/ocean-2', express.static(path.join(__dirname, '../dist')));
 
 app.get('/ocean-2/userpage', (req, res) => {
