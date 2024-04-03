@@ -1,4 +1,5 @@
 module.exports ={
+  publicPath: process.env.NODE_ENV === 'production' ? '/ocean-2/' : '/',
   pages: {
     user: {
       entry: 'src/pages/user/main.js',
