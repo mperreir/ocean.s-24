@@ -10,7 +10,7 @@ const server = http.createServer(app); // Use HTTP server
 
 const io = socketIo(server, {
   cors: {
-    origin: ["https://hyblab.polytech.univ-nantes.fr"],
+    origin: ["https://hyblab.polytech.univ-nantes.fr/ocean-2"],
     methods: ["GET", "POST"]
   }
 });
