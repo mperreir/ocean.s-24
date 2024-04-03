@@ -61,7 +61,7 @@
 
 <script setup>
 import { io } from 'socket.io-client'
-const socket = io('https://hyblab.polytech.univ-nantes.fr:3010/');
+const socket = io('ws://hyblab.polytech.univ-nantes.fr:3010/');
 import { ref } from 'vue';
 import im1 from './/assets/images/i1.png'
 import im2 from './/assets/images/i2.png'
