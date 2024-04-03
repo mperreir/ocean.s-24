@@ -24,10 +24,11 @@ var addr_server = server.listen(PORT, function () {
 
 const io = require("socket.io")(server, {
     cors: {
-      origin: [`http://localhost:${PORT}/`,"http://hyblab.polytech.univ-nantes.fr",`https://hyblab.polytech.univ-nantes.fr:${PORT}/`,"http://192.168.1.153",`https://192.168.1.153:${PORT}/`],
+      origin: ["https://hyblab.polytech.univ-nantes.fr/ocean-2"],
       methods: ["GET", "POST"]
     }
-  });
+});
+
 
 app.use('/ocean-2', express.static(path.join(__dirname, '../dist')));
 
