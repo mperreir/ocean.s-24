@@ -1,33 +1,40 @@
 const express = require('express');
-const http = require('http');
+const https = require('https'); // Use 'https' instead of 'http'
+const fs = require('fs'); // For reading SSL/TLS files
+const path = require('path');
+const socketIo = require('socket.io');
 
 const PORT = process.env.PORT || 3010;
 
-module.exports = PORT;
-
+// Assuming you have 'certificate.pem' and 'privatekey.pem' files
+const options = {
+  key: fs.readFileSync(path.join(__dirname, 'privatekey.pem')),
+  cert: fs.readFileSync(path.join(__dirname, 'certificate.pem'))
+};
 
 const app = express();
-const server = http.createServer(app);
+const server = https.createServer(options, app); // Use HTTPS server
 
-const path = require('path')
+// Rest of your express app setup...
 
+const io = socketIo(server, {
+  cors: {
+    origin: ["https://hyblab.polytech.univ-nantes.fr:3010/"],
+    methods: ["GET", "POST"]
+  }
+});
 
-// launch main server app
-//warning:  do not change the port, it will be automatically taken from env en dev and prod servers ...
+// Socket.io setup and event handlers...
+
 var addr_server = server.listen(PORT, function () {
     var host = addr_server.address().address;
     var port = addr_server.address().port;
 
-    console.log("Server running at http://%s:%s", host, port);
+    console.log("Server running at https://%s:%s", host, port); // Change to 'https'
 });
 
+// Express static and route handlers...
 
-const io = require("socket.io")(server, {
-    cors: {
-      origin: ["https://hyblab.polytech.univ-nantes.fr:3010/"],
-      methods: ["GET", "POST"]
-    }
-});
 
 app.use('/ocean-2', express.static(path.join(__dirname, '../dist')));
 

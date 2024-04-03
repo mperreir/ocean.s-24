@@ -1,39 +1,42 @@
 const express = require('express');
 const http = require('http');
 
-const PORT = 3010;
+const PORT = process.env.PORT || 3010;
+
 module.exports = PORT;
 
 
 const app = express();
 const server = http.createServer(app);
 
-
-var port = "PORT" in process.env ? process.env.PORT : 8080;
-var server = app.listen(port, function () {
-    var host = server.address().address;
-    var port = server.address().port;
-
-    console.log("Hyblab routing app listening at http://%s:%s", host, port);
-});
-
 const path = require('path')
+
+
+// launch main server app
+//warning:  do not change the port, it will be automatically taken from env en dev and prod servers ...
+var addr_server = server.listen(PORT, function () {
+    var host = addr_server.address().address;
+    var port = addr_server.address().port;
+
+    console.log("Server running at http://%s:%s", host, port);
+});
 
 
 const io = require("socket.io")(server, {
     cors: {
-      origin: [`http://localhost:${PORT}`,` https://hyblab.polytech.univ-nantes.fr:${PORT}`],
+      origin: ["https://hyblab.polytech.univ-nantes.fr:3010/"],
       methods: ["GET", "POST"]
     }
-  });
-  
-app.use(express.static(path.join(__dirname, '../dist')));
+});
+
+app.use('/ocean-2', express.static(path.join(__dirname, '../dist')));
 
 app.get('/ocean-2/userpage', (req, res) => {
   res.sendFile(path.join(__dirname, '../dist', 'user.html'));
 });
 
 app.get('/ocean-2/datapage', (req, res) => {
+  // Make sure to point to the correct html file within the 'dist' directory
   res.sendFile(path.join(__dirname, '../dist', 'data.html'));
 });
 
@@ -47,6 +50,3 @@ io.on('connection', (socket) => {
 
   });
 });
-
-server.listen( PORT, () => console.log(`Server running on port ${PORT}`));
-
