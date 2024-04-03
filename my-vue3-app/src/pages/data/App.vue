@@ -74,7 +74,7 @@ import s6 from './/assets/notificationsounds/messenger.mp3'
 import s7 from './/assets/notificationsounds/samsung.mp3'
 import s8 from './/assets/notificationsounds/snapchat.mp3'
 
-const socket = io('ws://hyblab.polytech.univ-nantes.fr/ocean-2/');
+const socket = io(['ws://hyblab.polytech.univ-nantes.fr/ocean-2/','http://localhost:3010','http://192.168.1.153:3010/',"http://192.168.1.153","http://hyblab.polytech.univ-nantes.fr","http://hyblab.polytech.univ-nantes.fr:3010"]);
 const sound1 = new Audio(s1);
 const sound2 = new Audio(s2);
 const sound3 = new Audio(s3);
