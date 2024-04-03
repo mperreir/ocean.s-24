@@ -97,7 +97,7 @@ async function sendMessage(type, content) {
   };
 
   try {
-    const response = await fetch('http://localhost:3010/ocean-2/messages', {
+    const response = await fetch(['http://localhost:3010/ocean-2/messages',"http://hyblab.polytech.univ-nantes.fr/ocean-2/messages"], {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -118,7 +118,7 @@ async function sendMessage(type, content) {
 // Function to periodically fetch messages
 async function fetchMessages() {
   try {
-    const response = await fetch('http://localhost:3010/ocean-2/messages');
+    const response = await fetch(['http://localhost:3010/ocean-2/messages',"http://hyblab.polytech.univ-nantes.fr/ocean-2/messages"]);
     if (!response.ok) throw new Error('Network response was not ok.');
     const data = await response.json();
     messages.value = data; // Update local messages with server data

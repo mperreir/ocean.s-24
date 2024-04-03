@@ -87,7 +87,7 @@ function playSound() {
 
 async function fetchMessages() {
   try {
-    const response = await fetch('http://localhost:3010/ocean-2/messages');
+    const response = await fetch(['http://localhost:3010/ocean-2/messages',"http://hyblab.polytech.univ-nantes.fr/ocean-2/messages"]);
     if (response.ok) {
       const messages = await response.json();
       data.value = messages.map(msg => ({
