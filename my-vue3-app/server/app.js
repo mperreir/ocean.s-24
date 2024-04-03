@@ -8,20 +8,22 @@ const app = express();
 const server = http.createServer(app);
 
 
-app.use(cors({
-  origin: [
-    `http://localhost:${PORT}/`, 
-    "http://hyblab.polytech.univ-nantes.fr", 
-    "https://hyblab.polytech.univ-nantes.fr",
-    `http://hyblab.polytech.univ-nantes.fr:${PORT}/`, 
-    "http://192.168.1.153", 
-    `http://192.168.1.153:${PORT}/`,
-    `https://hyblab.polytech.univ-nantes.fr:${PORT}/`, 
-    "http://hyblab.polytech.univ-nantes.fr/ocean-2/", 
-    "https://hyblab.polytech.univ-nantes.fr/ocean-2",
-  ],
-  methods: ["GET", "POST"]
-}));
+// app.use(cors({
+//   origin: [
+//     `http://localhost:${PORT}/`, 
+//     "http://hyblab.polytech.univ-nantes.fr", 
+//     "https://hyblab.polytech.univ-nantes.fr",
+//     `http://hyblab.polytech.univ-nantes.fr:${PORT}/`, 
+//     "http://192.168.1.153", 
+//     `http://192.168.1.153:${PORT}/`,
+//     `https://hyblab.polytech.univ-nantes.fr:${PORT}/`, 
+//     "http://hyblab.polytech.univ-nantes.fr/ocean-2/", 
+//     "https://hyblab.polytech.univ-nantes.fr/ocean-2",
+//   ],
+//   methods: ["GET", "POST"]
+// }));
+
+app.use(cors());
 
 app.use(express.json()); 
 app.use('/ocean-2', express.static(path.join(__dirname, '../dist')));
