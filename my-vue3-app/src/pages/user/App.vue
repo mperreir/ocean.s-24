@@ -60,78 +60,93 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { io } from 'socket.io-client'
+const socket = io(['ws://hyblab.polytech.univ-nantes.fr/ocean-2/','http://localhost:3010','http://192.168.1.153:3010/',"http://192.168.1.153",
+                    "http://hyblab.polytech.univ-nantes.fr","http://hyblab.polytech.univ-nantes.fr:3010",
+                    "http://hyblab.polytech.univ-nantes.fr/ocean-2",
+                    "https://hyblab.polytech.univ-nantes.fr","https://hyblab.polytech.univ-nantes.fr:3010",
+                    "https://hyblab.polytech.univ-nantes.fr/ocean-2"]);
+import { ref } from 'vue';
+import im1 from './/assets/images/i1.png'
+import im2 from './/assets/images/i2.png'
+import im3 from './/assets/images/i3.png'
+import v1 from './/assets/videos/v1.png'
+import v2 from './/assets/videos/v2.png'
+import v3 from './/assets/videos/v3.png'
+import v4 from './/assets/videos/v4.png'
 
-// Importing images and videos for use in the app
-import im1 from './assets/images/i1.png';
-import im2 from './assets/images/i2.png';
-import im3 from './assets/images/i3.png';
-import v1 from './assets/videos/v1.png';
-import v2 from './assets/videos/v2.png';
-import v3 from './assets/videos/v3.png';
-import v4 from './assets/videos/v4.png';
+const input = ref('')
+const drawer = ref(false)
+const drawer1 = ref(false)
+const direction = ref('btt')
+const images = ref([im1, im2, im3])
+const videos = ref([v1, v2, v3, v4])
 
-const input = ref('');
 const messages = ref([]);
-const drawer = ref(false);
-const drawer1 = ref(false);
-const direction = ref('btt');
-const images = ref([im1, im2, im3]);
-const videos = ref([v1, v2, v3, v4]);
-
-// Simulated user IP for demonstration purposes
 const fakeUserIP = `${getRandomArbitrary(1, 255)}.${getRandomArbitrary(1, 255)}.${getRandomArbitrary(1, 255)}.${getRandomArbitrary(1, 255)}`;
 
-// Utility function to generate random numbers
+document.addEventListener("DOMContentLoaded", () => {
+  const inputField = document.querySelector("#inputmsg");
+  const chatWindow = document.querySelector(".chat-window");
+  const sendButton = document.querySelector(".chat-send");
+  const imageButton = document.querySelector("#image-button");
+  const videoButton = document.querySelector("#video-button");
+
+  inputField.addEventListener("focus", () => {
+    sendButton.style.display = "block";
+    imageButton.style.display = "none";
+    videoButton.style.display = "none";
+  });
+
+  chatWindow.addEventListener("DOMNodeInserted", (e) => {
+    if (e.target.parentNode.className == chatWindow.className) {
+      sendButton.style.display = "none";
+      imageButton.style.display = "flex";
+      videoButton.style.display = "flex";
+      window.scrollTo(0, document.body.scrollHeight);
+    }
+  });
+});
+
 function getRandomArbitrary(min, max) {
   return String(Math.floor(Math.random() * (max - min) + min));
 }
 
-// Function to send messages using HTTP POST
-async function sendMessage(type, content) {
-  const message = {
-    id: Date.now(),
-    type,
-    content: type === 'text' ? input.value : content,
-    address: fakeUserIP,
-  };
-
-  try {
-    const response = await fetch(['http://localhost:3010/ocean-2/messages',"http://hyblab.polytech.univ-nantes.fr/ocean-2/messages"], {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(message),
-    });
-    if (!response.ok) throw new Error('Network response was not ok.');
-
-    messages.value.push(message); // Optionally, update local messages list
-    if (type === 'text') input.value = ''; // Clear text input
-    if (type === 'image') drawer.value = false; // Close image drawer
-    if (type === 'video') drawer1.value = false; // Close video drawer
-  } catch (error) {
-    console.error('Error sending message:', error);
+function sendMessage(type, content) {
+  const address = fakeUserIP;
+  if (type === 'text' && input.value.trim()) {
+    const newMessage = {
+      id: Date.now(),
+      type: type,
+      content: input.value,
+      address: address
+    }
+    messages.value.push(newMessage)
+    socket.emit('send message', newMessage);
+    input.value = ''
+  } else if (type === 'image' && content) {
+    const newMessage = {
+      id: Date.now(),
+      type: type,
+      content: content,
+      address: address
+    }
+    messages.value.push(newMessage)
+    socket.emit('send message', newMessage);
+    drawer.value = false
+  } else if (type === 'video' && content) {
+    const newMessage = {
+      id: Date.now(),
+      type: type,
+      content: content,
+      address: address
+    }
+    messages.value.push(newMessage)
+    socket.emit('send message', newMessage);
+    drawer1.value = false
   }
-}
 
-// Function to periodically fetch messages
-async function fetchMessages() {
-  try {
-    const response = await fetch(['http://localhost:3010/ocean-2/messages',"http://hyblab.polytech.univ-nantes.fr/ocean-2/messages"]);
-    if (!response.ok) throw new Error('Network response was not ok.');
-    const data = await response.json();
-    messages.value = data; // Update local messages with server data
-  } catch (error) {
-    console.error('Error fetching messages:', error);
-  }
 }
-
-// Fetch messages on component mount and set interval for periodic fetching
-onMounted(() => {
-  fetchMessages();
-  setInterval(fetchMessages, 1000); // Adjust interval as needed
-});
 
 </script>
 
