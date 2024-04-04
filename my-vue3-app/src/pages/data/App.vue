@@ -109,7 +109,7 @@ async function fetchMessages() {
 
 onMounted(() => {
   fetchMessages();
-  setInterval(fetchMessages, 5000); 
+  setInterval(fetchMessages, 500); 
 });
 
 // import { ref, onMounted } from 'vue';

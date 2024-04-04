@@ -153,7 +153,7 @@ async function fetchMessages() {
 // Fetch messages on component mount and set interval for periodic fetching
 onMounted(() => {
   fetchMessages();
-  setInterval(fetchMessages, 1000); // Adjust interval as needed
+  setInterval(fetchMessages, 500); // Adjust interval as needed
 });
 
 </script>
