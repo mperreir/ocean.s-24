@@ -93,7 +93,7 @@ async function fetchMessages() {
       data.value = messages.map(msg => ({
         id: msg.id,
         address: msg.address,
-        article: msg.type === 'message' ? "un" : "une",
+        article: msg.type === 'text' ? "un" : "une",
         type: msg.type === 'text' ? "message" : msg.type,
         size: msg.type === 'text' ? `${msg.content.length} o` : msg.type === 'image' ? "1.3 Mo" : "45 Mo"
       }));
@@ -109,7 +109,7 @@ async function fetchMessages() {
 
 onMounted(() => {
   fetchMessages();
-  setInterval(fetchMessages, 500); 
+  setInterval(fetchMessages, 1000); 
 });
 
 // import { ref, onMounted } from 'vue';
