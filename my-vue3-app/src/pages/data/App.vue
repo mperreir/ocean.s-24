@@ -78,6 +78,22 @@ import s8 from './assets/notificationsounds/snapchat.mp3';
 const sounds = [new Audio(s1), new Audio(s2), new Audio(s3), new Audio(s4), new Audio(s5), new Audio(s6), new Audio(s7), new Audio(s8)];
 const data = ref([]);
 
+document.addEventListener("DOMContentLoaded", function () {
+  setInterval(changeSlide, 10000);
+})
+
+let currentSlideNumber = 0;
+function changeSlide() {
+  currentSlideNumber++;
+  let currentSlide = ".slide" + currentSlideNumber;
+  document.querySelector(currentSlide).style.display = "none";
+
+  if (currentSlideNumber > 3) {
+    document.querySelectorAll(".slide").forEach(slide => slide.style.display = "block");
+    currentSlideNumber = 0;
+  }
+}
+
 
 function playSound() {
   let r = Math.floor(Math.random() * sounds.length);
