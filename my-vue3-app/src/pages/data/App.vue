@@ -87,7 +87,7 @@ function playSound() {
 
 async function fetchMessages() {
   try {
-    const response = await fetch("http://hyblab.polytech.univ-nantes.fr/ocean-2/messages");
+    const response = await fetch("https://hyblab.polytech.univ-nantes.fr/ocean-2/messages");
     if (response.ok) {
       const messages = await response.json();
       data.value = messages.map(msg => ({

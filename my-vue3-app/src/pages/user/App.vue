@@ -82,6 +82,29 @@ const videos = ref([v1, v2, v3, v4]);
 // Simulated user IP for demonstration purposes
 const fakeUserIP = `${getRandomArbitrary(1, 255)}.${getRandomArbitrary(1, 255)}.${getRandomArbitrary(1, 255)}.${getRandomArbitrary(1, 255)}`;
 
+document.addEventListener("DOMContentLoaded", () => {
+  const inputField = document.querySelector("#inputmsg");
+  const chatWindow = document.querySelector(".chat-window");
+  const sendButton = document.querySelector(".chat-send");
+  const imageButton = document.querySelector("#image-button");
+  const videoButton = document.querySelector("#video-button");
+
+  inputField.addEventListener("focus", () => {
+    sendButton.style.display = "block";
+    imageButton.style.display = "none";
+    videoButton.style.display = "none";
+  });
+
+  chatWindow.addEventListener("DOMNodeInserted", (e) => {
+    if (e.target.parentNode.className == chatWindow.className) {
+      sendButton.style.display = "none";
+      imageButton.style.display = "flex";
+      videoButton.style.display = "flex";
+      window.scrollTo(0, document.body.scrollHeight);
+    }
+  });
+});
+
 // Utility function to generate random numbers
 function getRandomArbitrary(min, max) {
   return String(Math.floor(Math.random() * (max - min) + min));
@@ -97,7 +120,7 @@ async function sendMessage(type, content) {
   };
 
   try {
-    const response = await fetch("http://hyblab.polytech.univ-nantes.fr/ocean-2/messages", {
+    const response = await fetch("https://hyblab.polytech.univ-nantes.fr/ocean-2/messages", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -118,7 +141,7 @@ async function sendMessage(type, content) {
 // Function to periodically fetch messages
 async function fetchMessages() {
   try {
-    const response = await fetch("http://hyblab.polytech.univ-nantes.fr/ocean-2/messages");
+    const response = await fetch("https://hyblab.polytech.univ-nantes.fr/ocean-2/messages");
     if (!response.ok) throw new Error('Network response was not ok.');
     const data = await response.json();
     messages.value = data; // Update local messages with server data
