@@ -46,7 +46,7 @@ void setup()
   pinMode(pinLeft, INPUT_PULLUP);
   pinMode(pinRight, INPUT_PULLUP);
 
-  Serial.begin(9600);
+  Serial.begin(115200);
 }
 
 void loop()
@@ -114,13 +114,19 @@ prevBp2State = b2;
       display.dec(2022);	// 9 9 9 9
       break;
     case 2:
-      display.dec(2024); 
+      display.dec(2022);	// 9 9 9 9
       break;
     case 3:
-      display.dec(2028); 
+      display.dec(2024);
       break;
     case 4:
-      display.dec(2035); 
+      display.dec(2028);
+      break;
+    case 5:
+      display.dec(2035);
+      break;
+    case 6:
+      display.dec(2035);
       break;
     default:
       display.dec(0000);
