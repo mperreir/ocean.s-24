@@ -74,15 +74,17 @@ struct Zone {
   unsigned long lastStateChange; // dernière fois que l'état a changé
 
   bool isCandidate; // une balise peut être posée
+
+  int lumenThreshold; // seuil de lumen correspondant au passage du laser sur la photorésistance
 };
 
 #define NB_ZONES 4
 
 Zone zones[NB_ZONES] = {
-  {A0, Blank, 0, true},
-  {A1, Blank, 0, false},
-  {A2, Blank, 0, true},
-  {A3, Blank, 0, false}
+  {A0, Blank, 0, true, 600},
+  {A1, Blank, 0, false, 1000},
+  {A2, Blank, 0, true, 1000},
+  {A3, Blank, 0, false, 1000}
 };
 
 constexpr unsigned long INACTIVITY_DELAY = 30000;
@@ -118,12 +120,12 @@ void loop() {
     dy = clamp(dy / 100, -1, 1)  * -1;
 
     int posX = servo1.read() + dx;
-    if (posX > 83 && posX < 110) {
+    if (posX > 20 && posX < 200) {
       servo1.write(servo1.read() + dx);
     }
 
     int posY = servo2.read() + dy;
-    if(posY > 72 && posY < 108) {
+    if(posY > 20 && posY < 200) {
       servo2.write(servo2.read() + dy);
     }
 
@@ -183,7 +185,7 @@ void loop() {
 
     // si la valeur mesurée en lumen est au delà de 2000, alors
     // le laser vient de passer sur le capteur
-    if (lumen > 2000 && now - zone.lastStateChange > ZONE_STATE_CHANGE_DELAY) {
+    if (lumen > zone.lumenThreshold && now - zone.lastStateChange > ZONE_STATE_CHANGE_DELAY) {
       zone.lastStateChange = now;
 
       // si la zone n'est pas découverte, on la passe en "scannée"
@@ -201,6 +203,8 @@ void loop() {
     }
 
     Serial.print(zone.state);
+    //Serial.print(':');
+    //Serial.print(lumen);
   }
 
   Serial.print("\n");
