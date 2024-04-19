@@ -50,3 +50,6 @@ git clone https://github.com/arthurgbn/ocean.s-24-groupe-3.git
 - 5 - Ouvrez les 2 fênetres (Cliquez sur les éléments "window", puis dans les paramètres -> "open as Separate window")
 
   
+## Schéma de l'arduino
+
+![Schéma de l'arduino](assets/schema_arduino.png)
