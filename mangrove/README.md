@@ -1,3 +1,16 @@
+## Matériel nécessaire
+
+- Carte Arduino Uno
+- Câble série Arduino
+- Ordinateur pour faire tourner TouchDesigner
+- 2 servo-moteurs + 1 laser
+- 1 joystick analogique
+- câbles mâle-mâle
+- câbles mâle-femelle
+- dominos de 5
+- dominos de 3
+- résistances de 10k ohms
+
 ## Logiciels nécessaires
 
 - [Touch Designer](https://derivative.ca/) : logiciel utilisé pour concevoir l'image qui sera projetée sur la maquette.
