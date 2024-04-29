@@ -35,7 +35,7 @@ Pour installer le logiciel Arduino et la bibliothèque Adafruit NeoPixel, suivez
     - Pour utiliser la bibliothèque dans votre code, incluez la ligne suivante en haut de votre fichier d'esquisse Arduino :
     `include <Adafruit_NeoPixel.h>`
 
-4. Copie du fichier main.cpp depuis le référentiel Git `Arduino/arduino-ws2812led/main.cpp` :
+4. Copie du fichier main.cpp depuis le référentiel Git `Arduino/arduino-ws2812led/arduino-ws2812led.ino` :
     - Assurez-vous d'avoir cloné ou téléchargé le référentiel Git arduino-ws2812led.
     - Naviguez jusqu'au répertoire où se trouve le fichier main.cpp dans votre système de fichiers.
     - Copiez le fichier main.cpp dans votre IDE Arduino.
